@@ -36,6 +36,14 @@
         <StackLayout Orientation="Horizontal">
             <Button Text="Клиент в машине" Clicked="StartDrive"/>
             <Button Text="Завершить поездку" Clicked="EndDrive"/>
+            <StackLayout Orientation="Horizontal" IsVisible="False" x:Name="CostLayout">
+                <Frame>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Стоимость поездки - "/>
+                        <Label Text="0" x:Name="Cost"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
         </StackLayout>
 
     </StackLayout>

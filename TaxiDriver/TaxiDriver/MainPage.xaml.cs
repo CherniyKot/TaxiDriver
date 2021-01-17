@@ -64,12 +64,13 @@ namespace TaxiDriver
         {
             RP?.Stop();
             order = await Server.GetOrder();
-            if (order.Status==0)
+            if (order == null || order.Status == 0)
             {
                 Dispatcher.BeginInvokeOnMainThread(() =>
                 {
                     polylineDriver.Geopath.Clear();
                     polylineOrder.Geopath.Clear();
+                    CostLayout.IsVisible = false;
                 });
                 map.Pins.Clear();
                 RP?.Start();
@@ -88,29 +89,11 @@ namespace TaxiDriver
                     map.Pins.Where(p => p.Label == "Taxi").FirstOrDefault().Position = new Position(order.latitudeDriver.Value, order.longitudeDriver.Value);
             }
 
-            /*if (map.Pins.Where(p => p.Type == PinType.Place).Count() == 0)
+            Dispatcher.BeginInvokeOnMainThread(() =>
             {
-                if (order.Status == 2)
-                {
-                    map.Pins.Add(new Pin()
-                    {
-                        Label = "Location",
-                        Position = new Position(order.latitudeFrom, order.longitudeFrom),
-                        Type = PinType.Place
-                    });
-                }
-                else if (order.Status == 3)
-                {
-                    map.Pins.Add(new Pin()
-                    {
-                        Label = "Destination",
-                        Position = new Position(order.latitudeTo, order.longitudeTo),
-                        Type = PinType.Place
-                    });
-                }
-            }*/
-
-
+                CostLayout.IsVisible = true;
+                Cost.Text = order.Cost.ToString();
+            });
             if (order.Status == 2)
             {
                 if (map.Pins.Any(p => p.Label == "Destination")) map.Pins.Remove(map.Pins.Where(p => p.Label == "Destination").First());

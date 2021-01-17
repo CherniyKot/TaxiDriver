@@ -51,8 +51,8 @@ namespace TaxiDriver
             var values = new Dictionary<string, string>
             {
                 { "driverId", driverId.ToString() },
-                { "latitude", latitude.ToString().Replace('.',',') },
-                { "longitude", longitude.ToString().Replace('.',',') }
+                { "latitude", latitude.ToString("F9").Replace('.',',') },
+                { "longitude", longitude.ToString("F9").Replace('.',',') }
             };
 
             var content = new FormUrlEncodedContent(values);
@@ -81,6 +81,7 @@ namespace TaxiDriver
         public double latitudeTo { get; set; }
         public double? longitudeDriver { get; set; }
         public double? latitudeDriver { get; set; }
+        public double Cost { get; set; }
     }
 
 
